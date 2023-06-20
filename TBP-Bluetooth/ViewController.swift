@@ -19,11 +19,15 @@ class ViewController: UIViewController {
     var redSlider: UISlider!
     var greenSlider: UISlider!
     var blueSlider: UISlider!
+    
+    //Table
+    private var tableView: UITableView!
 
     //Properties
     private var centralManager: CBCentralManager!
     private var peripheral: CBPeripheral!
     private var peripherals: [CBPeripheral] = []
+    private var discoveredDevices: [String] = []
     
     private var redChar: CBCharacteristic?
     private var greenChar: CBCharacteristic?
@@ -33,21 +37,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let halfHeight = view.frame.height / 2
+        
         //Set labels
-        redLabel = UILabel(frame: CGRect(x: 50, y: 350, width: 200, height: 30))
+        redLabel = UILabel(frame: CGRect(x: 50, y: 150, width: 200, height: 30))
         redLabel.text = "Red"
         view.addSubview(redLabel)
         
-        greenLabel = UILabel(frame: CGRect(x: 50, y: 400, width: 200, height: 30))
+        greenLabel = UILabel(frame: CGRect(x: 50, y: 200, width: 200, height: 30))
         greenLabel.text = "Green"
         view.addSubview(greenLabel)
         
-        blueLabel = UILabel(frame: CGRect(x: 50, y: 450, width: 200, height: 30))
+        blueLabel = UILabel(frame: CGRect(x: 50, y: 250, width: 200, height: 30))
         blueLabel.text = "Blue"
         view.addSubview(blueLabel)
         
         //Set sliders
-        redSlider = UISlider(frame: CGRect(x: 120, y: 350, width: 200, height: 30))
+        redSlider = UISlider(frame: CGRect(x: 120, y: 150, width: 200, height: 30))
         redSlider.minimumValue = 0
         redSlider.maximumValue = 255
         redSlider.tintColor = .red
@@ -55,7 +61,7 @@ class ViewController: UIViewController {
         redSlider.addTarget(self, action: #selector(redSliderChanged), for: .valueChanged)
         view.addSubview(redSlider)
         
-        greenSlider = UISlider(frame: CGRect(x: 120, y: 400, width: 200, height: 30))
+        greenSlider = UISlider(frame: CGRect(x: 120, y: 200, width: 200, height: 30))
         greenSlider.minimumValue = 0
         greenSlider.maximumValue = 255
         greenSlider.tintColor = .green
@@ -63,7 +69,7 @@ class ViewController: UIViewController {
         greenSlider.addTarget(self, action: #selector(greenSliderChanged), for: .valueChanged)
         view.addSubview(greenSlider)
         
-        blueSlider = UISlider(frame: CGRect(x: 120, y: 450, width: 200, height: 30))
+        blueSlider = UISlider(frame: CGRect(x: 120, y: 250, width: 200, height: 30))
         blueSlider.minimumValue = 0
         blueSlider.maximumValue = 255
         blueSlider.tintColor = .blue
@@ -71,7 +77,13 @@ class ViewController: UIViewController {
         blueSlider.addTarget(self, action: #selector(blueSliderChanged), for: .valueChanged)
         view.addSubview(blueSlider)
         
-        
+        // Crea la tabla
+        tableView = UITableView(frame: CGRect(x: 0, y: halfHeight, width: view.frame.width, height: halfHeight))
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DeviceCell") // Registra la celda reutilizable
+        view.addSubview(tableView)
+
         centralManager = CBCentralManager(delegate: self, queue: nil)
     }
     
@@ -125,11 +137,12 @@ extension ViewController: CBCentralManagerDelegate {
 //    }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-            if !peripherals.contains(peripheral) {
-                peripherals.append(peripheral)
-                print("Discovered peripheral:", peripheral)
-            }
+        if !discoveredDevices.contains(peripheral.name ?? "") {
+            discoveredDevices.append(peripheral.name ?? "")
+            tableView.reloadData()// Actualiza la tabla para mostrar los nuevos dispositivos
         }
+    }
+
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         if peripheral == self.peripheral {
@@ -193,4 +206,21 @@ extension ViewController: CBPeripheralDelegate {
         }
     }
     
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return discoveredDevices.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath)
+        cell.textLabel?.text = discoveredDevices[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedDevice = discoveredDevices[indexPath.row]
+        // Realiza las acciones necesarias cuando se selecciona un dispositivo, como conectar o mostrar más información.
+    }
 }
