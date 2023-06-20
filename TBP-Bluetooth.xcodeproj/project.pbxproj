@@ -13,6 +13,7 @@
 		02CD8CEF2A3BD59200422074 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CD8CED2A3BD59200422074 /* Main.storyboard */; };
 		02CD8CF12A3BD59800422074 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CD8CF02A3BD59800422074 /* Assets.xcassets */; };
 		02CD8CF42A3BD59800422074 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CD8CF22A3BD59800422074 /* LaunchScreen.storyboard */; };
+		02CD8CFD2A3BDCB700422074 /* ParticlePeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD8CFC2A3BDCB700422074 /* ParticlePeripheral.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		02CD8CF02A3BD59800422074 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02CD8CF32A3BD59800422074 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02CD8CF52A3BD59800422074 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02CD8CFC2A3BDCB700422074 /* ParticlePeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlePeripheral.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		02CD8CE62A3BD59200422074 /* TBP-Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
+				02CD8CFB2A3BDC9A00422074 /* Models */,
 				02CD8CE72A3BD59200422074 /* AppDelegate.swift */,
 				02CD8CE92A3BD59200422074 /* SceneDelegate.swift */,
 				02CD8CEB2A3BD59200422074 /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				02CD8CF52A3BD59800422074 /* Info.plist */,
 			);
 			path = "TBP-Bluetooth";
+			sourceTree = "<group>";
+		};
+		02CD8CFB2A3BDC9A00422074 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				02CD8CFC2A3BDCB700422074 /* ParticlePeripheral.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +152,7 @@
 				02CD8CEC2A3BD59200422074 /* ViewController.swift in Sources */,
 				02CD8CE82A3BD59200422074 /* AppDelegate.swift in Sources */,
 				02CD8CEA2A3BD59200422074 /* SceneDelegate.swift in Sources */,
+				02CD8CFD2A3BDCB700422074 /* ParticlePeripheral.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
