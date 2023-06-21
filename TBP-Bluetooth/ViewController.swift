@@ -140,6 +140,7 @@ extension ViewController: CBCentralManagerDelegate {
         if !discoveredDevices.contains(peripheral.name ?? "") {
             discoveredDevices.append(peripheral.name ?? "")
             tableView.reloadData()// Actualiza la tabla para mostrar los nuevos dispositivos
+            print("Discovered device:", peripheral.name ?? "")
         }
     }
 
@@ -221,6 +222,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedDevice = discoveredDevices[indexPath.row]
+        print("\(selectedDevice)")
         // Realiza las acciones necesarias cuando se selecciona un dispositivo, como conectar o mostrar más información.
     }
 }
